@@ -8,7 +8,7 @@ import { MatTableDataSource, MatSort, MatPaginator  } from '@angular/material';
 })
 export class UsersComponent implements OnInit {
 
-  editFormIsHidden = true;
+  editFormIsHidden = false;
 
   data = [
     {
@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
     },
     {
       "name": "hello",
-      "id": "2"
+      "id": "3"
     }
   ]
 
@@ -42,6 +42,14 @@ export class UsersComponent implements OnInit {
 
   closeEditForm(){
     this.editFormIsHidden = true;
+  }
+
+  openUserView(id){
+    alert(id);
+  }
+
+  onCancel(){
+    
   }
 
 }

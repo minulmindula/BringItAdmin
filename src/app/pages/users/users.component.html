@@ -1,39 +1,113 @@
-
-<div class="card" [hidden]="editFormIsHidden">
+<!--Profile details view-->
+<!-- <div class="card">
   <div class="card-header">
-    <strong>Company</strong>
-    <small>Form</small>
+    <strong>User Details</strong>
     <button (click)="closeEditForm()" style="float: right; border: none; border-color: transparent; border-radius: 3px;">
       <i class="fa fa-close"></i>
     </button>
   </div>
   <div class="card-body">
-    <div class="form-group">
-      <label for="company">Company</label>
-      <input type="text" class="form-control" id="company" placeholder="Enter your company name">
-    </div>
-    <div class="form-group">
-      <label for="vat">VAT</label>
-      <input type="text" class="form-control" id="vat" placeholder="PL1234567890">
-    </div>
-    <div class="form-group">
-      <label for="street">Street</label>
-      <input type="text" class="form-control" id="street" placeholder="Enter street name">
-    </div>
+    
+    <table border="1" width="100%"> 
+      <tr>
+        <td width="40%">
+
+          <div style="text-align: center;">
+
+            <div style="width: 40%; height: 35%; background-color: white; margin: 40px auto; box-shadow: 2px 4px 2px lightgrey; padding: 10px;">
+              <img src="http://www.stickpng.com/assets/images/586b9fe2ac70c620df6a2909.png" width="100%" height="100%" />
+            </div>
+
+          </div>
+         
+
+        </td>
+        <td width="60%" valign="top" style="padding: 20px;">
+
+          <div>
+
+            <h5>Username:</h5>
+
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</div>    -->
+
+
+<div class="card" [hidden]="editFormIsHidden">
+  <div class="card-header">
+    <strong>User details</strong>
+    <small>EDIT</small>
+    <button (click)="closeEditForm()" style="float: right; border: none; border-color: transparent; border-radius: 3px;">
+      <i class="fa fa-close"></i>
+    </button>
+  </div>
+  <div class="card-body">
+    <table border="0" width="100%">
+      <tr>
+        <td width="35%" style="padding: 20px;" valign="top">
+
+            <div style="text-align: center;">
+
+              <div style="width: 45%; height: 30%; background-color: white; margin: 40px auto; box-shadow: 2px 4px 2px lightgrey; padding: 10px;">
+                <img src="http://www.stickpng.com/assets/images/586b9fe2ac70c620df6a2909.png" width="100%" height="100%" />
+              </div>
+
+              <button type="button" mat-raised-button (click)="fileInput.click()" class="btn btn-primary"><i class="fa fa-file-image-o"></i>&nbsp;Upload image</button>
+              <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+
+              <div class="form-group col-lg-6" style="margin: 20px auto;">
+                <label for="company">Username</label>
+                <input type="text" class="form-control" id="company" placeholder="Enter your username" value="minnam01">
+              </div>
+
+            </div>
+
+        </td>
+        <td width="65%" style="padding: 20px;" valign="top">
+
+          <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="company">Firstname</label>
+                <input type="text" class="form-control" id="company" placeholder="Enter your first name">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="company">Lastname</label>
+                <input type="text" class="form-control" id="company" placeholder="Enter your last name">
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="company">E-Mail address</label>
+                <input type="text" class="form-control" id="company" placeholder="Enter your first name">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="company">Phone number</label>
+                <input type="text" class="form-control" id="company" placeholder="Enter your last name">
+              </div>
+          </div>
+      
+          <div class="form-group">
+            <label for="city">Address</label>
+            <input type="text" class="form-control" id="city" placeholder="Enter your address">
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
     <div class="row">
-      <div class="form-group col-sm-8">
-        <label for="city">City</label>
-        <input type="text" class="form-control" id="city" placeholder="Enter your city">
+      <div class="col-6 col-sm-4 col-md mb-3 mb-xl-0 text-right">
+        <button type="button" class="btn btn-primary"><i class="fa fa-lightbulb-o"></i>&nbsp;Submit</button>
+        <button type="button" class="btn btn-danger"><i class="fa fa-lightbulb-o"></i>&nbsp;Reset</button>
       </div>
-      <div class="form-group col-sm-4">
-        <label for="postal-code">Postal Code</label>
-        <input type="text" class="form-control" id="postal-code" placeholder="Postal Code">
-      </div>
-    </div><!--/.row-->
-    <div class="form-group">
-      <label for="country">Country</label>
-      <input type="text" class="form-control" id="country" placeholder="Country name">
     </div>
+
   </div>
 </div>   
 
@@ -56,7 +130,9 @@
         <tbody>
           <tr *ngFor="let d of data">
             <td hidden>{{ d.id }}</td>
-            <td>{{ d.name }}</td>
+            <td>
+              {{ d.name }}
+            </td>
             <td>user@gmail.com</td>
             <td>2012/01/01</td>
             <td>

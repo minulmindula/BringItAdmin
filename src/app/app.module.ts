@@ -20,7 +20,7 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
-import { MatPaginatorModule, MatTableModule  } from '@angular/material';
+import { MatPaginatorModule, MatDialogModule  } from '@angular/material';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -58,7 +58,8 @@ import { RestaurantsComponent } from './pages/restaurants/restaurants.component'
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
   ],
   declarations: [
     AppComponent,
@@ -69,7 +70,7 @@ import { RestaurantsComponent } from './pages/restaurants/restaurants.component'
     RegisterComponent,
     UsersComponent,
     RidersComponent,
-    RestaurantsComponent,
+    RestaurantsComponent
   ],
   providers: [{
     provide: LocationStrategy,
