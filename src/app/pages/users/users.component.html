@@ -1,0 +1,100 @@
+
+<div class="card" [hidden]="editFormIsHidden">
+  <div class="card-header">
+    <strong>Company</strong>
+    <small>Form</small>
+    <button (click)="closeEditForm()" style="float: right; border: none; border-color: transparent; border-radius: 3px;">
+      <i class="fa fa-close"></i>
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="form-group">
+      <label for="company">Company</label>
+      <input type="text" class="form-control" id="company" placeholder="Enter your company name">
+    </div>
+    <div class="form-group">
+      <label for="vat">VAT</label>
+      <input type="text" class="form-control" id="vat" placeholder="PL1234567890">
+    </div>
+    <div class="form-group">
+      <label for="street">Street</label>
+      <input type="text" class="form-control" id="street" placeholder="Enter street name">
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-8">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" placeholder="Enter your city">
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="postal-code">Postal Code</label>
+        <input type="text" class="form-control" id="postal-code" placeholder="Postal Code">
+      </div>
+    </div><!--/.row-->
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" id="country" placeholder="Country name">
+    </div>
+  </div>
+</div>   
+
+<div class="col-lg-13">
+  <div class="card">
+    <div class="card-header">
+      <h5>Total Users</h5>
+    </div>
+    <div class="card-body">
+      <table mat-table class="table table-striped" *ngIf="data">
+        <thead>
+          <tr>
+            <th width="25%">Username</th>
+            <th width="30%">E-mail address</th>
+            <th width="15%">Date registered</th>
+            <th width="15%">Status</th>
+            <th width="15%">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of data">
+            <td hidden>{{ d.id }}</td>
+            <td>{{ d.name }}</td>
+            <td>user@gmail.com</td>
+            <td>2012/01/01</td>
+            <td>
+              <span class="badge badge-danger">De-activated</span>
+            </td>
+            <td>
+              <div style="display: flex; margin-left: 0px;">
+                <div class="col-4 ">
+                  <button (click)="edit( d.id ) " type="button" class="btn btn-pill btn-block btn-primary">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                </div>
+                <div class="col-4 ">
+                  <button (click)="delete( d.id )" type="button" class="btn btn-pill btn-block btn-danger">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+        <li class="page-item active">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul> -->
+	
+      <!-- <mat-paginator [pageSize]="2" [pageSizeOptions]="[2, 4, 6, 10, 20]">
+      </mat-paginator> -->
+
+    </div>
+  </div>
+</div>
+
