@@ -44,6 +44,10 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { UsersComponent } from './pages/users/users.component';
 import { RidersComponent } from './pages/riders/riders.component';
 import { RestaurantsComponent } from './pages/restaurants/restaurants.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthComponent } from './auth/auth.component';
+import { AuthInterceptor } from './auth-interceptor';
 
 @NgModule({
   imports: [
@@ -58,7 +62,13 @@ import { RestaurantsComponent } from './pages/restaurants/restaurants.component'
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token')
+      }
+    })
   ],
   declarations: [
     AppComponent,
@@ -70,11 +80,17 @@ import { RestaurantsComponent } from './pages/restaurants/restaurants.component'
     UsersComponent,
     RidersComponent,
     RestaurantsComponent,
+    AuthComponent,
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  },{
+    provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+  }
+],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

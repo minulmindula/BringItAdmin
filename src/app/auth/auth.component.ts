@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../auth.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: 'login.component.html'
+  selector: 'app-auth',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss']
 })
-export class LoginComponent { 
+export class AuthComponent implements OnInit {
+
   private returnUrl: string;
   constructor(private authService: AuthService, private router: Router,
     private activated: ActivatedRoute) { }
@@ -14,14 +16,6 @@ export class LoginComponent {
   ngOnInit() {
     this.activated.queryParams.subscribe(params => {
       this.returnUrl = params["returnUrl"];
-    });
-    const username = "admin";
-    const password = "123qwe"
-    this.authService.authenticate(username, password).subscribe(() => {
-      const url = this.returnUrl || '/';
-      this.router.navigate([url]);
-    }, (error) => {
-
     });
   }
 
@@ -35,4 +29,5 @@ export class LoginComponent {
 
     });
   }
+
 }
