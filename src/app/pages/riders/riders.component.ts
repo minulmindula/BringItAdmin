@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestaurantService } from '../../shared-services/restaurant-service.component';
 
 @Component({
   selector: 'app-riders',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RidersComponent implements OnInit {
 
-  constructor() { }
+  constructor(private res: RestaurantService) { }
 
   ngOnInit() {
+    this.res.getRestaurant().subscribe(res => {
+      console.log(res);
+    })
   }
 
 }

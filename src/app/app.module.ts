@@ -48,6 +48,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptor } from './auth-interceptor';
+import { RestaurantService } from './shared-services/restaurant-service.component';
 
 @NgModule({
   imports: [
@@ -89,7 +90,8 @@ import { AuthInterceptor } from './auth-interceptor';
     provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-  }
+  },
+  RestaurantService
 ],
   bootstrap: [ AppComponent ]
 })
