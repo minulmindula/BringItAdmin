@@ -5,6 +5,7 @@ import { RestaurantsCreateComponent } from './restaurants-create/restaurants-cre
 import { RestaurantsMenuComponent } from './restaurants-menu/restaurants-menu.component';
 
 import Swal from 'sweetalert2';
+import { RestaurantService, RestaurantOutputDto } from '../../shared-services/restaurant-service.component';
 
 @Component({
   selector: 'app-restaurants',
@@ -13,11 +14,17 @@ import Swal from 'sweetalert2';
 })
 export class RestaurantsComponent implements OnInit {
 
+  restaurants: RestaurantOutputDto[];
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private resService:RestaurantService
   ) { }
 
   ngOnInit() {
+    this.resService.getRestaurant().subscribe(res=>{
+      this.restaurants = res;
+    })
+    console.log(this.restaurants);
   }
 
   openEdit(){
