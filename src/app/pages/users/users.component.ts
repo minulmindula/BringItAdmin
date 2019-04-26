@@ -61,4 +61,12 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  openUserView(id){
+    alert(id);
+  }
+
+  onCancel(){
+
+  }
+
 }
