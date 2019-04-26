@@ -1,5 +1,5 @@
 <div class="col-8 col-sm-6 col-md mb-6 mb-xl-3 text-right">
-  <button type="button" class="btn btn-outline-success"><i class="fa fa-plus"></i>&nbsp;Add Restaurant</button>
+  <button type="button" (click)="createRestaurant()" class="btn btn-outline-success"><i class="fa fa-plus"></i>&nbsp;Add Restaurant</button>
 </div>
 
 <div class="col-lg-13">
@@ -11,21 +11,130 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Date registered</th>
-              <th>E-mail address</th>
+              <th>Restaurant name</th>
+              <th>City</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
               <th>Status</th>
+              <th>Options</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Samppa Nori</td>
-              <td>2012/01/01</td>
-              <td>user@gmail.com</td>
+              <td>Pizza Hut</td>
+              <td>Nugegoda</td>
+              <td>123.456</td>
+              <td>45.6789</td>
               <td>
                 <span class="badge badge-success">Active</span>
               </td>
+              <td>
+                <div style="display: flex; margin-left: 0px;">
+                  <div class="col-2">
+                    <button (click)="openEdit() " type="button" class="btn btn-pill btn-block btn-primary">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </div>
+                  <div class="col-5">
+                    <button (click)="viewMore()" type="button" class="btn btn-pill btn-block btn-danger">
+                      View menu
+                    </button>
+                  </div>
+                </div>
+              </td>
             </tr>
+            <tr>
+                <td>Burger Hut</td>
+                <td>Madiwela</td>
+                <td>12.5456</td>
+                <td>457.789</td>
+                <td>
+                  <span class="badge badge-success">Active</span>
+                </td>
+                <td>
+                  <div style="display: flex; margin-left: 0px;">
+                    <div class="col-3">
+                      <button (click)="openEdit() " type="button" class="btn btn-pill btn-block btn-primary">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                    </div>
+                    <div class="col-5">
+                      <button (click)="viewMore()" type="button" class="btn btn-pill btn-block btn-danger">
+                        View menu
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                  <td>Burger King</td>
+                  <td>Kiribathgoda</td>
+                  <td>12.3956</td>
+                  <td>45.9889</td>
+                  <td>
+                    <span class="badge badge-success">Active</span>
+                  </td>
+                  <td>
+                    <div style="display: flex; margin-left: 0px;">
+                      <div class="col-2">
+                        <button (click)="openEdit() " type="button" class="btn btn-pill btn-block btn-primary">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                      </div>
+                      <div class="col-5">
+                        <button (click)="viewMore()" type="button" class="btn btn-pill btn-block btn-danger">
+                          View menu
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                    <td>KFC</td>
+                    <td>Rajagiriya</td>
+                    <td>123.456</td>
+                    <td>456.789</td>
+                    <td>
+                      <span class="badge badge-success">Active</span>
+                    </td>
+                    <td>
+                      <div style="display: flex; margin-left: 0px;">
+                        <div class="col-2">
+                          <button (click)="openEdit() " type="button" class="btn btn-pill btn-block btn-primary">
+                            <i class="fa fa-edit"></i>
+                          </button>
+                        </div>
+                        <div class="col-5">
+                          <button (click)="viewMore()" type="button" class="btn btn-pill btn-block btn-danger">
+                            View menu
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>MacDonalds</td>
+                      <td>Nugegoda</td>
+                      <td>12.696</td>
+                      <td>4567.89</td>
+                      <td>
+                        <span class="badge badge-success">Active</span>
+                      </td>
+                      <td>
+                        <div style="display: flex; margin-left: 0px;">
+                          <div class="col-2">
+                            <button (click)="openEdit() " type="button" class="btn btn-pill btn-block btn-primary">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                          </div>
+                          <div class="col-5">
+                            <button (click)="viewMore()" type="button" class="btn btn-pill btn-block btn-danger">
+                              View menu
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
           </tbody>
         </table>
         <ul class="pagination">

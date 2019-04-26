@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator  } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog  } from '@angular/material';
+import { UsersEditComponent } from './users-edit/users-edit.component';
 
 @Component({
   selector: 'app-users',
@@ -8,24 +9,42 @@ import { MatTableDataSource, MatSort, MatPaginator  } from '@angular/material';
 })
 export class UsersComponent implements OnInit {
 
-  editFormIsHidden = true;
-
   data = [
     {
-      "name": "hi",
-      "id": "1"
+      "name": "Namal Wijerathne",
+      "id": "1",
+      "email": "Namal@gmail.com",
+      "date": "2016/07/15"
     },
     {
-      "name": "hello",
-      "id": "2"
+      "name": "Jayampath Rathnayeka",
+      "id": "2",
+      "email": "Jaya123@yahoo.com",
+      "date": "2019/02/20"
     },
     {
-      "name": "hello",
-      "id": "2"
+      "name": "Sunil Edirisinghe",
+      "id": "3",
+      "email": "sunil@yahoo.com",
+      "date": "2019/03/25"
+    },
+    {
+      "name": "Thilanka Rathnayeka",
+      "id": "4",
+      "email": "Thila@gmail.com",
+      "date": "2019/07/14"
+    },
+    {
+      "name": "Sangeeth Wijewardana",
+      "id": "5",
+      "email": "wije@hhotmail.com",
+      "date": "2019/12/16"
     }
   ]
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
   }
@@ -35,13 +54,11 @@ export class UsersComponent implements OnInit {
     alert(id);
   }
 
-  edit(id){
-    this.editFormIsHidden = false;
-    alert(id);
-  }
-
-  closeEditForm(){
-    this.editFormIsHidden = true;
+  edit(){
+    const dialogRef = this.dialog.open(UsersEditComponent,{
+      width: '800px',
+      data: {}
+    });
   }
 
 }
