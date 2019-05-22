@@ -75,6 +75,7 @@ import { RestaurantsMenuItemEditComponent } from './pages/restaurants/restaurant
     MatPaginatorModule,
     MatDialogModule,
     MatSelectModule,
+    FormsModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {

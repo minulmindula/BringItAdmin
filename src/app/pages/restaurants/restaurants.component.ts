@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, PageEvent } from '@angular/material';
 import { RestaurantsEditComponent } from './restaurants-edit/restaurants-edit.component';
 import { RestaurantsCreateComponent } from './restaurants-create/restaurants-create.component';
 import { RestaurantsMenuComponent } from './restaurants-menu/restaurants-menu.component';
@@ -15,6 +15,14 @@ import { RestaurantService, RestaurantOutputDto } from '../../shared-services/re
 export class RestaurantsComponent implements OnInit {
 
   restaurants: RestaurantOutputDto[];
+  length = 1000;
+  pageSize = 5;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  pageEvent: PageEvent;
+  rest = [];
+  restChunks = [];
+
   constructor(
     public dialog: MatDialog,
     private resService:RestaurantService
@@ -23,7 +31,9 @@ export class RestaurantsComponent implements OnInit {
   ngOnInit() {
     this.resService.getRestaurant().subscribe(res=>{
       this.restaurants = res;
+      this.rest.push(res);
     })
+    this.restChunks = this.rest.slice(0,this.pageSize);
     console.log(this.restaurants);
   }
 
@@ -52,7 +62,17 @@ export class RestaurantsComponent implements OnInit {
   createRestaurant(){
     this.dialog.open(RestaurantsCreateComponent,{
       width: '500px',
-      data: {}
     });
+  }
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+
+  onPageChanged(e){
+    console.log("this was called");
+    let firstCut = e.pageIndex * e.pageSize;
+    let secondCut = e.firstCut + e.pageSize;
+    this.restChunks = this.rest.slice(firstCut, secondCut);
   }
 }

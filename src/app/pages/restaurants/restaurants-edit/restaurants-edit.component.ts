@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { RestaurantService, RestaurantOutputDto } from './../../../shared-services/restaurant-service.component';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { RestaurantInputDto } from '../../../shared-services/restaurant-service.component';
 
 @Component({
   selector: 'app-restaurants-edit',
@@ -9,7 +11,9 @@ import { MatDialogRef } from '@angular/material';
 export class RestaurantsEditComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<RestaurantsEditComponent>
+    public dialogRef: MatDialogRef<RestaurantsEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public res : RestaurantOutputDto,
+    private restService : RestaurantService,
   ) { }
 
   ngOnInit() {
@@ -18,4 +22,18 @@ export class RestaurantsEditComponent implements OnInit {
   closeEditForm(){
     this.dialogRef.close();
   }
+
+  onSubmit(data: RestaurantInputDto): void{
+    this.restService.insertRestaurant(data).subscribe(res =>{
+      this.dialogRef.close();
+      location.reload();
+    })
+  }
+
+  onDelete(id:number){
+    this.restService.deleteRestaurant(id).subscribe(res=>{
+      location.reload();
+    })
+  }
+
 }

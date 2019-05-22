@@ -9,29 +9,29 @@
     <div class="card-body">
       <div class="form-group">
         <label>Restaurant name</label>
-        <input type="text" class="form-control" id="company" placeholder="Enter your restaurant name">
+        <input type="text" class="form-control" id="company" placeholder="Enter your restaurant name" [(ngModel)] = "res.displayName">
       </div>
       <div class="form-group">
         <label>City</label>
-        <input type="text" class="form-control" id="city" placeholder="Enter your city">
+        <input type="text" class="form-control" id="city" placeholder="Enter your city" [(ngModel)] = "res.city">
       </div>
       <div class="row">
         <div class="form-group col-sm-6">
           <label>Latitude</label>
-          <input type="text" class="form-control" id="latitude" placeholder="Enter latitude">
+          <input type="text" class="form-control" id="latitude" placeholder="Enter latitude" [(ngModel)] = "res.latitutde">
         </div>
         <div class="form-group col-sm-6">
           <label>Longitude</label>
-          <input type="text" class="form-control" id="longitude" placeholder="Enter longitude">
+          <input type="text" class="form-control" id="longitude" placeholder="Enter longitude" [(ngModel)] = "res.longitude">
         </div>
       </div><!--/.row-->
     </div>
     <div class="row">
         <div class="col-8 col-sm-6 col-md mb-6 mb-xl-3 text-left" style="margin-left: 20px">
-            <button type="button" class="btn btn-outline-success">Save Changes</button>
+            <button type="button" class="btn btn-outline-success" (click) = "onSubmit(res.id)">Save Changes</button>
         </div>
         <div class="col-8 col-sm-6 col-md mb-6 mb-xl-3 text-right" style="margin-right: 20px">
-            <button type="button" class="btn btn-outline-danger">Delete</button>
+            <button type="button" class="btn btn-outline-danger" (click) = "onDelete(res.id)" >Delete</button>
         </div>
     </div>
   </div>
