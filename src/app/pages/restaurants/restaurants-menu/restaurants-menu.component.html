@@ -37,6 +37,20 @@
                   </div>
                 </td>
               </tr>
+              <tr *ngFor="let menus of menu">
+                <td> {{ menus.Type }}</td>
+                <td> {{ menus.DisplayName }}</td>
+                <td> {{ menus.Price }}</td>
+                <td>
+                  <div style="display: flex; margin-left: 0px;">
+                    <div class="col-4 ">
+                      <button (click)="editMenuItem(menus.id)" type="button" class="btn btn-pill btn-block btn-primary">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

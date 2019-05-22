@@ -9,24 +9,24 @@
     <div class="card-body">
       <div class="form-group">
         <label>Restaurant name</label>
-        <input type="text" class="form-control" id="company" placeholder="Enter your restaurant name">
+        <input type="text" class="form-control" id="restaurant" placeholder="Enter your restaurant name" [(ngModel)]="restaurant.displayName">
       </div>
       <div class="form-group">
         <label>City</label>
-        <input type="text" class="form-control" id="city" placeholder="Enter your city">
+        <input type="text" class="form-control" id="city" placeholder="Enter your city" [(ngModel)]="restaurant.city">
       </div>
       <div class="row">
         <div class="form-group col-sm-6">
           <label>Latitude</label>
-          <input type="text" class="form-control" id="latitude" placeholder="Enter latitude">
+          <input type="text" class="form-control" id="latitude" placeholder="Enter latitude" [(ngModel)]="restaurant.latitutde">
         </div>
         <div class="form-group col-sm-6">
           <label>Longitude</label>
-          <input type="text" class="form-control" id="longitude" placeholder="Enter longitude">
+          <input type="text" class="form-control" id="longitude" placeholder="Enter longitude" [(ngModel)]="restaurant.longitude">
         </div>
       </div><!--/.row-->
     </div>
     <div class="col-8 col-sm-6 col-md mb-6 mb-xl-3">
-        <button type="button" class="btn btn-outline-success">Save</button>
+        <button type="button" class="btn btn-outline-success" (click) = "onCreate(restaurant)">Create</button>
     </div>
   </div>

@@ -1,3 +1,4 @@
+import { MenuInputDto } from './../../../shared-services/restaurant-service.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
@@ -8,6 +9,8 @@ import { MatDialogRef } from '@angular/material';
 })
 export class RestaurantsMenuItemCreateComponent implements OnInit {
 
+  menuDetails : MenuInputDto;
+  
   constructor(
     private dialogRef:MatDialogRef<RestaurantsMenuItemCreateComponent>
   ) { }

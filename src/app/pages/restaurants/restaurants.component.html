@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let res of restaurants">
+            <tr *ngFor="let res of restaurants">
               <td> {{ res.displayName }}</td>
               <td> {{ res.city }}</td>
               <td> {{ res.latitutde }}</td>
@@ -27,18 +27,19 @@
               <td>
                   <div style="display: flex; margin-left: 0px;">
                       <div class="col-2">
-                        <button (click)="openEdit() " type="button" class="btn btn-pill btn-block btn-primary">
+                        <button (click)="openEdit(res.id) " type="button" class="btn btn-pill btn-block btn-primary">
                           <i class="fa fa-edit"></i>
                         </button>
                       </div>
                       <div class="col-5">
-                        <button (click)="viewMore()" type="button" class="btn btn-pill btn-block btn-danger">
+                        <button (click)="viewMore(res.id)" type="button" class="btn btn-pill btn-block btn-danger">
                           View menu
                         </button>
                       </div>
                     </div>
               </td>
-            </tr> -->
+            </tr>
+
             <tr>
               <td>Pizza Hut</td>
               <td>Nugegoda</td>
@@ -141,7 +142,7 @@
                     </tr>
           </tbody>
         </table>
-        <ul class="pagination">
+        <!-- <ul class="pagination">
           <li class="page-item"><a class="page-link" href="#">Prev</a></li>
           <li class="page-item active">
             <a class="page-link" href="#">1</a>
@@ -150,7 +151,14 @@
           <li class="page-item"><a class="page-link" href="#">3</a></li>
           <li class="page-item"><a class="page-link" href="#">4</a></li>
           <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
+        </ul> -->
       </div>
+      <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChanged($event)">
+    </mat-paginator>
     </div>
   </div>
+
