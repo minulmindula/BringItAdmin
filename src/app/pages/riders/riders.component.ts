@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestaurantService } from '../../shared-services/restaurant-service.component';
 import { PageEvent } from '@angular/material';
+import { UserService } from '../../shared-services/user-service.component';
 
 @Component({
   selector: 'app-riders',
@@ -17,12 +18,14 @@ export class RidersComponent implements OnInit {
   books = [];
   bookChunks = [];
 
-  constructor(private res: RestaurantService) { }
+  constructor(private _userService: UserService) { }
 
   ngOnInit() {
-    this.res.getRestaurant().subscribe(res => {
-      console.log(res);
-    })
+    this._userService.getDrivers().then(
+      res => {
+        console.log(res);
+      }
+    )
   }
 
 }
