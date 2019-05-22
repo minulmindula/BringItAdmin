@@ -7,29 +7,37 @@
 //----------------------
 // ReSharper disable InconsistentNaming
 
+import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
+import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
+import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
+
+export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
+
 export interface IUserService {
     /**
      * @param input (optional) 
      * @return Success
      */
-    register(input: UserRegisterInputDto | null | undefined): Promise<void>;
+    register(input: UserRegisterInputDto | null | undefined): Observable<void>;
     /**
      * @return Success
      */
-    getUsers(): Promise<UserOutputDto[]>;
+    getUsers(): Observable<UserOutputDto[]>;
     /**
      * @return Success
      */
-    getDrivers(): Promise<UserOutputDto[]>;
+    getDrivers(): Observable<UserOutputDto[]>;
 }
 
+@Injectable()
 export class UserService implements IUserService {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:7000";
     }
 
@@ -37,64 +45,92 @@ export class UserService implements IUserService {
      * @param input (optional) 
      * @return Success
      */
-    register(input: UserRegisterInputDto | null | undefined): Promise<void> {
-        let url_ = this.baseUrl + "/api/Users/Register";
+    register(input: UserRegisterInputDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/users/Register";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
 
-        let options_ = <RequestInit>{
+        let options_ : any = {
             body: content_,
-            method: "POST",
-            headers: {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
                 "Content-Type": "application/json", 
-            }
+            })
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processRegister(_response);
-        });
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRegister(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRegister(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
     }
 
-    protected processRegister(response: Response): Promise<void> {
+    protected processRegister(response: HttpResponseBase): Observable<void> {
         const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
-            return response.text().then((_responseText) => {
-            return;
-            });
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
         } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
+            }));
         }
-        return Promise.resolve<void>(<any>null);
+        return _observableOf<void>(<any>null);
     }
 
     /**
      * @return Success
      */
-    getUsers(): Promise<UserOutputDto[]> {
+    getUsers(): Observable<UserOutputDto[]> {
         let url_ = this.baseUrl + "/users/GetUsers";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
                 "Accept": "application/json"
-            }
+            })
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetUsers(_response);
-        });
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUsers(<any>response_);
+                } catch (e) {
+                    return <Observable<UserOutputDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserOutputDto[]>><any>_observableThrow(response_);
+        }));
     }
 
-    protected processGetUsers(response: Response): Promise<UserOutputDto[]> {
+    protected processGetUsers(response: HttpResponseBase): Observable<UserOutputDto[]> {
         const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (resultData200 && resultData200.constructor === Array) {
@@ -102,40 +138,54 @@ export class UserService implements IUserService {
                 for (let item of resultData200)
                     result200!.push(UserOutputDto.fromJS(item));
             }
-            return result200;
-            });
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
+            }));
         }
-        return Promise.resolve<UserOutputDto[]>(<any>null);
+        return _observableOf<UserOutputDto[]>(<any>null);
     }
 
     /**
      * @return Success
      */
-    getDrivers(): Promise<UserOutputDto[]> {
-        let url_ = this.baseUrl + "/users/GetDrivers";
+    getDrivers(): Observable<UserOutputDto[]> {
+        let url_ = this.baseUrl + "/api/Users/GetDrivers";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
                 "Accept": "application/json"
-            }
+            })
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetDrivers(_response);
-        });
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDrivers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDrivers(<any>response_);
+                } catch (e) {
+                    return <Observable<UserOutputDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserOutputDto[]>><any>_observableThrow(response_);
+        }));
     }
 
-    protected processGetDrivers(response: Response): Promise<UserOutputDto[]> {
+    protected processGetDrivers(response: HttpResponseBase): Observable<UserOutputDto[]> {
         const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (resultData200 && resultData200.constructor === Array) {
@@ -143,14 +193,14 @@ export class UserService implements IUserService {
                 for (let item of resultData200)
                     result200!.push(UserOutputDto.fromJS(item));
             }
-            return result200;
-            });
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
+            }));
         }
-        return Promise.resolve<UserOutputDto[]>(<any>null);
+        return _observableOf<UserOutputDto[]>(<any>null);
     }
 }
 
@@ -282,9 +332,25 @@ export class SwaggerException extends Error {
     }
 }
 
-function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): any {
+function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
     if(result !== null && result !== undefined)
-        throw result;
+        return _observableThrow(result);
     else
-        throw new SwaggerException(message, status, response, headers, null);
+        return _observableThrow(new SwaggerException(message, status, response, headers, null));
+}
+
+function blobToText(blob: any): Observable<string> {
+    return new Observable<string>((observer: any) => {
+        if (!blob) {
+            observer.next("");
+            observer.complete();
+        } else {
+            let reader = new FileReader(); 
+            reader.onload = event => { 
+                observer.next((<any>event.target).result);
+                observer.complete();
+            };
+            reader.readAsText(blob); 
+        }
+    });
 }
